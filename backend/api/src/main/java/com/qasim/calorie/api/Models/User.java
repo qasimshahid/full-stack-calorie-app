@@ -2,17 +2,21 @@ package com.qasim.calorie.api.Models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
+// POJO Users class, Hibernate automatically creates the table "users" with the predefined columns.
+// strategy = GenerationType.Identity - auto increment IDs
+
 @Entity
+@Table(name="users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long user_id;
 
     @Column
-    private String firstName;
-
-    @Column
-    private String lastName;
+    private String name;
 
     @Column
     private int age;
@@ -30,30 +34,35 @@ public class User {
     private String emailAddress;
 
     @Column
-    private String passWrd;
+    private String password;
 
-    public long getId() {
-        return id;
+    @Column
+    private int caloriesIn;
+
+    @Column
+    private int caloriesOut;
+
+    @Column
+    private int calorieGoal;
+
+    @OneToMany(cascade = CascadeType.ALL) // Create the foods when creating user.
+    @JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
+    private List<Food> foods;
+
+    public long getUser_id() {
+        return user_id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUser_id(long id) {
+        this.user_id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String Name) {
+        this.name = Name;
     }
 
     public int getAge() {
@@ -80,12 +89,12 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
-    public String getPassWrd() {
-        return passWrd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassWrd(String passWrd) {
-        this.passWrd = passWrd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getHeight() {
@@ -102,6 +111,38 @@ public class User {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    public int getCaloriesIn() {
+        return caloriesIn;
+    }
+
+    public void setCaloriesIn(int caloriesIn) {
+        this.caloriesIn = caloriesIn;
+    }
+
+    public int getCaloriesOut() {
+        return caloriesOut;
+    }
+
+    public void setCaloriesOut(int caloriesOut) {
+        this.caloriesOut = caloriesOut;
+    }
+
+    public int getCalorieGoal() {
+        return calorieGoal;
+    }
+
+    public void setCalorieGoal(int calorieGoal) {
+        this.calorieGoal = calorieGoal;
+    }
+
+    public List<Food> getFoods() {
+        return foods;
+    }
+
+    public void setFoods(List<Food> foods) {
+        this.foods = foods;
     }
 
 }
